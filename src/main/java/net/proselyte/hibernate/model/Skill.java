@@ -12,7 +12,7 @@ import java.util.stream.Collectors;
 @Table(name = "skill")
 public class Skill {
     @Id
-    @Column(name = "idSkills")
+    @Column(name = "id_skills")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSkill;
 
