@@ -47,15 +47,7 @@ public class DeveloperController extends AbstractController {
 
             if (getScan().hasNextInt()) {
                 int choise = getScan().nextInt();
-                switch (choise) {
-                    case CREATE_DEVELOPER:
-                        createNewDeveloper();
-                        break;
-                    case 2:
-                        showAllDevlopers();
-                        break;
-                    //
-                }
+
                 if (choise == CREATE_DEVELOPER) {
                     createNewDeveloper();
                 } else if (choise == 2) {
@@ -88,17 +80,6 @@ public class DeveloperController extends AbstractController {
         }
     }
 
-    private void setDeps(Developer developer) {
-        try {
-            List<Project> projects = projectDAO.getByDevId(developer.getId());
-            developer.setProjects(projects);
-            List<Skill> skills = skillDAO.getByDevId(developer.getId());
-            developer.setSkills(skills);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-    }
 
     private void deleteDeveloper() {
         System.out.println("Input developer id");
@@ -132,8 +113,7 @@ public class DeveloperController extends AbstractController {
             List<Developer> developers = developerDAO.getAll();
             for(int i = 0; i < developers.size(); i++){
                 Developer developer = developers.get(i);
-
-//                setDeps(developer);
+                developer.getId();
                 System.out.println(developer);
             }
 

@@ -9,32 +9,22 @@ import java.util.stream.Collectors;
 @Table(name = "developer")
 public class Developer {
 
-    @Id
-    @Column(name = "id_developer")
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
-    @Column(name = "first_name")
+
     private String firstName;
 
-    @Column(name = "last_name")
+
     private String lastName;
 
-    @Column(name = "salary")
+
     private BigDecimal salary;
 
-    @ManyToMany
-    @JoinTable(name = "project_developer",
-            joinColumns = { @JoinColumn(name = "id_developer") },
-            inverseJoinColumns = { @JoinColumn(name = "id_project") }
-    )
+
     private List<Project> projects;
 
-    @ManyToMany
-    @JoinTable(name = "developer_skill",
-            joinColumns = { @JoinColumn(name = "id_developer") },
-            inverseJoinColumns = { @JoinColumn(name = "id_skill") }
-    )
+
     private List<Skill> skills;
 
     public Developer() {
@@ -51,6 +41,9 @@ public class Developer {
         this.salary = salary;
     }
 
+    @Id
+    @Column(name = "id_developer")
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
     }
@@ -59,6 +52,7 @@ public class Developer {
         this.id = id;
     }
 
+    @Column(name = "first_name")
     public String getFirstName() {
         return firstName;
     }
@@ -67,6 +61,7 @@ public class Developer {
         this.firstName = firstName;
     }
 
+    @Column(name = "last_name")
     public String getLastName() {
         return lastName;
     }
@@ -75,6 +70,7 @@ public class Developer {
         this.lastName = lastName;
     }
 
+    @Column(name = "salary")
     public BigDecimal getSalary() {
         return salary;
     }
@@ -83,6 +79,11 @@ public class Developer {
         this.salary = salary;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "project_developer",
+            joinColumns = { @JoinColumn(name = "id_developer", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_project", nullable = false, updatable = false) }
+    )
     public List<Project> getProjects() {
         return projects;
     }
@@ -91,6 +92,11 @@ public class Developer {
         this.projects = projects;
     }
 
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "developer_skill",
+            joinColumns = { @JoinColumn(name = "id_developer", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_skill", nullable = false, updatable = false) }
+    )
     public List<Skill> getSkills() {
         return skills;
     }

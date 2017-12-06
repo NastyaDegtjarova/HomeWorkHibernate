@@ -61,7 +61,6 @@ public class CustomerController {
         long customId = scan.nextLong();
         try {
             Customer customer = customerDAO.getById(customId);
-            setDeps(customer);
             System.out.println(customer);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -73,19 +72,9 @@ public class CustomerController {
             List<Customer> customers = customerDAO.getAll();
             for(int i = 0; i < customers.size(); i++){
                 Customer customer = customers.get(i);
-                setDeps(customer);
                 System.out.println(customer);
             }
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setDeps(Customer customer) {
-        try {
-            List<Project> projects = projectDAO.getByCustId(customer.getIdCustomer());
-            customer.setProjects(projects);
         } catch (SQLException e) {
             e.printStackTrace();
         }

@@ -60,7 +60,6 @@ public class SkillController {
         long skillId = scan.nextLong();
         try {
             Skill skill = skillDAO.getById(skillId);
-            setDeps(skill);
             System.out.println(skill);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,19 +71,8 @@ public class SkillController {
             List<Skill> skills = skillDAO.getAll();
             for(int i = 0; i < skills.size(); i++){
                 Skill skill = skills.get(i);
-                setDeps(skill);
                 System.out.println(skill);
             }
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setDeps(Skill skill) {
-        try {
-            List<Developer> developers = developerDAO.getByProjId(skill.getIdSkill());
-            skill.setDevelopers(developers);
 
         } catch (SQLException e) {
             e.printStackTrace();

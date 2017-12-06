@@ -72,7 +72,6 @@ public class ProjectController {
             List<Project> projects = projectDAO.getAll();
             for(int i = 0; i < projects.size(); i++){
                 Project project = projects.get(i);
-                setDeps(project);
                 System.out.println(project);
             }
         } catch (SQLException e) {
@@ -85,21 +84,7 @@ public class ProjectController {
         long projId = scan.nextLong();
         try {
             Project project = projectDAO.getById(projId);
-            setDeps(project);
             System.out.println(project);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setDeps(Project project) {
-        try {
-            List<Developer> developers = developerDAO.getByProjId(project.getId());
-            project.setDevelopers(developers);
-            List<Companie> companies = companieDAO.getByProjId(project.getId());
-            project.setCompanies(companies);
-            List<Customer> customers = customerDAO.getByProjId(project.getId());
-            project.setCustomers(customers);
         } catch (SQLException e) {
             e.printStackTrace();
         }

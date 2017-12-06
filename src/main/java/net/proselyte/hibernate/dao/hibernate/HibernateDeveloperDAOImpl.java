@@ -62,6 +62,9 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
         Session session = this.sessionFactory.openSession();
         Query query = session.createQuery("FROM Developer d");
         List<Developer> result = query.list();
+        for (Developer developer : result) {
+            System.out.println(developer.getId());
+        }
         session.close();
         return result;
     }

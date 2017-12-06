@@ -60,7 +60,6 @@ public class CompanyController {
         long companieId = scan.nextLong();
         try {
             Companie companie = companieDAO.getById(companieId);
-            setDeps(companie);
             System.out.println(companie);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -72,18 +71,8 @@ public class CompanyController {
             List<Companie> companies = companieDAO.getAll();
             for(int i = 0; i < companies.size(); i++){
                 Companie companie = companies.get(i);
-                setDeps(companie);
                 System.out.println(companie);
             }
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void setDeps(Companie companie) {
-        try {
-            List<Project> projects = projectDAO.getByCompId(companie.getIdComp());
-            companie.setProjects(projects);
         } catch (SQLException e) {
             e.printStackTrace();
         }
