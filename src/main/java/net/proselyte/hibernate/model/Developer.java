@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 @Entity
-@Table(name = "developer")
+@Table(name = "DEVELOPER")
 public class Developer {
 
 
@@ -42,7 +42,7 @@ public class Developer {
     }
 
     @Id
-    @Column(name = "id_developer")
+    @Column(name = "ID_DEVELOPER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     public Long getId() {
         return id;
@@ -52,7 +52,7 @@ public class Developer {
         this.id = id;
     }
 
-    @Column(name = "first_name")
+    @Column(name = "FIRST_NAME")
     public String getFirstName() {
         return firstName;
     }
@@ -61,7 +61,7 @@ public class Developer {
         this.firstName = firstName;
     }
 
-    @Column(name = "last_name")
+    @Column(name = "LAST_NAME")
     public String getLastName() {
         return lastName;
     }
@@ -70,7 +70,7 @@ public class Developer {
         this.lastName = lastName;
     }
 
-    @Column(name = "salary")
+    @Column(name = "SALARY")
     public BigDecimal getSalary() {
         return salary;
     }
@@ -80,9 +80,9 @@ public class Developer {
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "project_developer",
-            joinColumns = { @JoinColumn(name = "id_developer", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "id_project", nullable = false, updatable = false) }
+    @JoinTable(name = "PROJECT_DEVELOPER",
+            joinColumns = { @JoinColumn(name = "ID_DEVELOPER", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "ID_PROJECT", nullable = false, updatable = false) }
     )
     public List<Project> getProjects() {
         return projects;
@@ -93,9 +93,9 @@ public class Developer {
     }
 
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "developer_skill",
-            joinColumns = { @JoinColumn(name = "id_developer", nullable = false, updatable = false) },
-            inverseJoinColumns = { @JoinColumn(name = "id_skill", nullable = false, updatable = false) }
+    @JoinTable(name = "DEVELOPER_SKILL",
+            joinColumns = { @JoinColumn(name = "ID_DEVELOPER", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "ID_SKILL", nullable = false, updatable = false) }
     )
     public List<Skill> getSkills() {
         return skills;
@@ -119,7 +119,7 @@ public class Developer {
                         ? "[]"
                         :skills.stream().map(Skill::getSpecialty).collect(Collectors.toList())) + '\'' +
                 ", lastName='" + lastName + '\'' +
-                ", salary=" + salary +
+                ", SALARY=" + salary +
                 '}';
     }
 

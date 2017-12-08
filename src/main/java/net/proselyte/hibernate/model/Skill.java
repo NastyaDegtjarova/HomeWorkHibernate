@@ -9,20 +9,20 @@ import java.util.stream.Collectors;
  * Created by Nastya on 20.11.2017.
  */
 @Entity
-@Table(name = "skill")
+@Table(name = "SKILL")
 public class Skill {
     @Id
-    @Column(name = "id_skills")
+    @Column(name = "ID_SKILLS")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idSkill;
 
-    @Column(name = "specialty")
+    @Column(name = "SPECIALTY")
     private String specialty;
 
     @ManyToMany
-    @JoinTable(name = "developer_skill",
-            joinColumns = { @JoinColumn(name = "id_skill") },
-            inverseJoinColumns = { @JoinColumn(name = "id_developer") }
+    @JoinTable(name = "DEVELOPER_SKILL",
+            joinColumns = { @JoinColumn(name = "ID_SKILL") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_DEVELOPER") }
     )
     private List<Developer> developers;
 
@@ -80,7 +80,7 @@ public class Skill {
                 developers == null
                         ? "[]"
                         :developers.stream().map(Developer::getLastName).collect(Collectors.toList())) + '\'' +
-                ", specialty ='" + specialty + '\'' +
+                ", SPECIALTY ='" + specialty + '\'' +
 
                 '}';
     }

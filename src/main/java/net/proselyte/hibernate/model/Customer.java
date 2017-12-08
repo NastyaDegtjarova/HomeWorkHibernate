@@ -8,23 +8,23 @@ import java.util.stream.Collectors;
  * Created by Nastya on 20.11.2017.
  */
 @Entity
-@Table(name = "customer")
+@Table(name = "CUSTOMER")
 public class Customer {
     @Id
-    @Column(name = "id_customer")
+    @Column(name = "ID_CUSTOMER")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCustomer;
 
-    @Column(name = "first_name_customers")
+    @Column(name = "FIRST_NAME_CUSTOMERS")
     private String firstNameCust;
 
-    @Column(name = "last_name_customers")
+    @Column(name = "LAST_NAME_CUSTOMERS")
     private String lastNameCust;
 
     @ManyToMany
-    @JoinTable(name = "customer_project",
-            joinColumns = { @JoinColumn(name = "id_customer") },
-            inverseJoinColumns = { @JoinColumn(name = "id_project") }
+    @JoinTable(name = "CUSTOMER_PROJECT",
+            joinColumns = { @JoinColumn(name = "ID_CUSTOMER") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_PROJECT") }
     )
     private List<Project> projects;
 

@@ -63,7 +63,8 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
         Query query = session.createQuery("FROM Developer d");
         List<Developer> result = query.list();
         for (Developer developer : result) {
-            System.out.println(developer.getId());
+            Hibernate.initialize(developer.getProjects());
+            Hibernate.initialize(developer.getSkills());
         }
         session.close();
         return result;
@@ -71,8 +72,8 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
 
     public List<Developer> getAllBySpecialty(String specialty) {
         Session session = this.sessionFactory.openSession();
-        Query query = session.createQuery("FROM Developer d where d.specialty= :specialty");
-        query.setParameter("specialty", specialty);
+        Query query = session.createQuery("FROM Developer d where d.SPECIALTY= :SPECIALTY");
+        query.setParameter("SPECIALTY", specialty);
         List<Developer> result = query.list();
         session.close();
         return result;
@@ -82,7 +83,7 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
         Session session = this.sessionFactory.openSession();
 
         Criteria criteria = session.createCriteria(Developer.class);
-        criteria.add(Restrictions.gt("salary", salary));
+        criteria.add(Restrictions.gt("SALARY", salary));
 
         List<Developer> result = criteria.list();
         session.close();
@@ -93,7 +94,7 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
     public List<Developer> getAllDeveloperSQL() {
         Session session = this.sessionFactory.openSession();
 
-        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM developer");
+        SQLQuery sqlQuery = session.createSQLQuery("SELECT * FROM DEVELOPER");
         sqlQuery.addEntity(Developer.class);
         List<Developer> result = sqlQuery.list();
 

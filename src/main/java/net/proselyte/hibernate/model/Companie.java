@@ -8,7 +8,7 @@ import java.util.stream.Collectors;
  * Created by Nastya on 20.11.2017.
  */
 @Entity
-@Table(name = "companie")
+@Table(name = "COMPANIE")
 public class Companie {
     @Id
     @Column(name = "idCompanies")
@@ -19,9 +19,9 @@ public class Companie {
     private String nameComp;
 
     @ManyToMany
-    @JoinTable(name = "compani_project",
+    @JoinTable(name = "COMPANI_PROJECT",
             joinColumns = { @JoinColumn(name = "id_companie") },
-            inverseJoinColumns = { @JoinColumn(name = "id_project") }
+            inverseJoinColumns = { @JoinColumn(name = "ID_PROJECT") }
     )
     private List<Project> projects;
 

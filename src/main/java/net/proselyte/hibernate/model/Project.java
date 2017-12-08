@@ -6,37 +6,37 @@ import java.util.stream.Collectors;
 
 @Entity
 
-@Table(name = "project")
+@Table(name = "PROJECT")
 public class Project {
     @Id
-    @Column(name = "id_projects")
+    @Column(name = "ID_PROJECTS")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "name_projects")
+    @Column(name = "NAME_PROJECTS")
     private String name;
 
-    @Column(name = "cost")
+    @Column(name = "COST")
     private int cost;
 
     @ManyToMany
-    @JoinTable(name = "project_developer",
-            joinColumns = { @JoinColumn(name = "id_project") },
-            inverseJoinColumns = { @JoinColumn(name = "id_developer") }
+    @JoinTable(name = "PROJECT_DEVELOPER",
+            joinColumns = { @JoinColumn(name = "ID_PROJECT") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_DEVELOPER") }
     )
     private List<Developer> developers;
 
     @ManyToMany
-    @JoinTable(name = "customer_project",
-            joinColumns = { @JoinColumn(name = "id_project") },
-            inverseJoinColumns = { @JoinColumn(name = "id_customer") }
+    @JoinTable(name = "CUSTOMER_PROJECT",
+            joinColumns = { @JoinColumn(name = "ID_PROJECT") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_CUSTOMER") }
     )
     private List<Customer> customers;
 
     @ManyToMany
-    @JoinTable(name = "compani_project",
-            joinColumns = { @JoinColumn(name = "id_project") },
-            inverseJoinColumns = { @JoinColumn(name = "id_compani") }
+    @JoinTable(name = "COMPANI_PROJECT",
+            joinColumns = { @JoinColumn(name = "ID_PROJECT") },
+            inverseJoinColumns = { @JoinColumn(name = "ID_COMPANI") }
     )
     private List<Companie> companies;
 
