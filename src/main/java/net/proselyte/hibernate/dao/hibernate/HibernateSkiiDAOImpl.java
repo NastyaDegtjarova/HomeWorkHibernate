@@ -2,6 +2,7 @@ package net.proselyte.hibernate.dao.hibernate;
 
 import net.proselyte.hibernate.dao.SkillDAO;
 import net.proselyte.hibernate.model.Skill;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,6 +48,7 @@ public class HibernateSkiiDAOImpl implements SkillDAO {
     public Skill getById(Long id) {
         Session session = this.sessionFactory.openSession();
         Skill skill = session.get(Skill.class, id);
+        Hibernate.initialize(skill.getDevelopers());
         session.close();
         return skill;
     }
@@ -64,6 +66,9 @@ public class HibernateSkiiDAOImpl implements SkillDAO {
         Session session = this.sessionFactory.openSession();
         Query query = session.createQuery("FROM Skill s");
         List<Skill> result = query.list();
+        for (Skill skill : result) {
+            Hibernate.initialize(skill.getDevelopers());
+        }
         session.close();
         return result;
     }

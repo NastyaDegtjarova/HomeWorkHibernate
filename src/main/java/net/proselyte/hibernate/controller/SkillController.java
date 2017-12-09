@@ -57,7 +57,7 @@ public class SkillController extends AbstractController{
                         showSkilById();
                         break;
                     case PREVIOUS_MENU:
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -116,13 +116,10 @@ public class SkillController extends AbstractController{
     }
 
     private void createNewSkill() {
-        System.out.println("Input SKILL id");
-        long skillId = scan.nextLong();
         System.out.println("Input SKILL SPECIALTY");
-        scan.nextLine();
         String skillSpecialty = scan.nextLine();
         try {
-            skillDAO.save(new Skill(skillId, skillSpecialty));
+            skillDAO.save(new Skill(skillSpecialty));
         } catch (SQLException e) {
             e.printStackTrace();
         }

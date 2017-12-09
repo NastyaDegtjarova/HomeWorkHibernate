@@ -58,7 +58,7 @@ public class CustomerController extends AbstractController{
                         showCustomById();
                         break;
                     case PREVIOUS_MENU:
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -117,15 +117,13 @@ public class CustomerController extends AbstractController{
     }
 
     private void createNewCustomer() {
-        System.out.println("Input CUSTOMER id");
-        long customerId = scan.nextLong();
+
         System.out.println("Input firstNameCustomer");
-        scan.nextLine();
         String firstNameCustomer = scan.nextLine();
         System.out.println("Input lastNameCustomer");
         String lastNameCustomer = scan.nextLine();
         try {
-            customerDAO.save(new Customer(customerId, firstNameCustomer, lastNameCustomer));
+            customerDAO.save(new Customer(firstNameCustomer, lastNameCustomer));
         } catch (SQLException e) {
             e.printStackTrace();
         }

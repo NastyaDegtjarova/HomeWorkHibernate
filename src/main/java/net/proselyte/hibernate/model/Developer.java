@@ -34,6 +34,12 @@ public class Developer {
         this.id = id;
     }
 
+    public Developer(String firstName, String lastName, BigDecimal salary) {
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.salary = salary;
+    }
+
     public Developer(Long id, String firstName, String lastName, BigDecimal salary) {
         this.id = id;
         this.firstName = firstName;

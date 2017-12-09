@@ -2,6 +2,7 @@ package net.proselyte.hibernate.dao.hibernate;
 
 import net.proselyte.hibernate.dao.CompanieDAO;
 import net.proselyte.hibernate.model.Companie;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,6 +48,7 @@ public class HibernateCompanyDAOImpl implements CompanieDAO {
     public Companie getById(Long id) {
         Session session = this.sessionFactory.openSession();
         Companie companie = session.get(Companie.class, id);
+        Hibernate.initialize(companie.getProjects());
         session.close();
         return companie;
     }
@@ -64,6 +66,9 @@ public class HibernateCompanyDAOImpl implements CompanieDAO {
         Session session = this.sessionFactory.openSession();
         Query query = session.createQuery("FROM Companie c");
         List<Companie> result = query.list();
+        for (Companie companie : result) {
+            Hibernate.initialize(companie.getProjects());
+        }
         session.close();
         return result;
     }

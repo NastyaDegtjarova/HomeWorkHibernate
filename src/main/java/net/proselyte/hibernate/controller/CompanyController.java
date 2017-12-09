@@ -57,7 +57,7 @@ public class CompanyController extends AbstractController{
                         showCompanById();
                         break;
                     case PREVIOUS_MENU:
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -113,13 +113,10 @@ public class CompanyController extends AbstractController{
     }
 
     private void createNewCompanie() {
-        System.out.println("Input companies id");
-        long compId = scan.nextLong();
         System.out.println("Input name COMPANIE");
-        scan.nextLine();
         String name_companie = scan.nextLine();
         try {
-            companieDAO.save(new Companie(compId, name_companie));
+            companieDAO.save(new Companie(name_companie));
         } catch (SQLException e) {
             e.printStackTrace();
         }

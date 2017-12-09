@@ -43,6 +43,11 @@ public class Project {
     public Project() {
     }
 
+    public Project(String name, int cost) {
+        this.name = name;
+        this.cost = cost;
+    }
+
     public Project(Long id) {
         this.id = id;
     }
@@ -118,6 +123,7 @@ public class Project {
                 customers == null
                         ? "[]"
                         : customers.stream().map(Customer::getFirstNameCust).collect(Collectors.toList())) + '\'' +
+                ", cost=" + cost +
                 '}';
     }
 

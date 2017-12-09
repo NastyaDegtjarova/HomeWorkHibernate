@@ -45,6 +45,8 @@ public class HibernateDeveloperDAOImpl implements DeveloperDAO {
     public Developer getById(Long id) {
         Session session = this.sessionFactory.openSession();
         Developer developer = session.get(Developer.class, id);
+        Hibernate.initialize(developer.getProjects());
+        Hibernate.initialize(developer.getSkills());
         session.close();
         return developer;
     }

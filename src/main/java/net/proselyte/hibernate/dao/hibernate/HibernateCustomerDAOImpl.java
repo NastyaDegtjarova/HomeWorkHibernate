@@ -2,6 +2,7 @@ package net.proselyte.hibernate.dao.hibernate;
 
 import net.proselyte.hibernate.dao.CustomerDAO;
 import net.proselyte.hibernate.model.Customer;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
@@ -47,6 +48,9 @@ public class HibernateCustomerDAOImpl implements CustomerDAO {
     public Customer getById(Long id) {
         Session session = this.sessionFactory.openSession();
         Customer customer = session.get(Customer.class, id);
+        if (customer != null) {
+            Hibernate.initialize(customer.getProjects());
+        }
         session.close();
         return customer;
     }
@@ -64,6 +68,9 @@ public class HibernateCustomerDAOImpl implements CustomerDAO {
         Session session = this.sessionFactory.openSession();
         Query query = session.createQuery("FROM Customer c");
         List<Customer> result = query.list();
+        for (Customer customer : result) {
+            Hibernate.initialize(customer.getProjects());
+        }
         session.close();
         return result;
 }

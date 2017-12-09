@@ -33,6 +33,10 @@ public class Skill {
         this.idSkill = idSkill;
     }
 
+    public Skill(String specialty) {
+        this.specialty = specialty;
+    }
+
     public Skill(Long idSkill, String specialty) {
         this.idSkill = idSkill;
         this.specialty = specialty;

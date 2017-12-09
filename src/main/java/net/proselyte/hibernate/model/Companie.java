@@ -11,21 +11,25 @@ import java.util.stream.Collectors;
 @Table(name = "COMPANIE")
 public class Companie {
     @Id
-    @Column(name = "idCompanies")
+    @Column(name = "id_companies")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idComp;
 
-    @Column(name = "nameCompanies")
+    @Column(name = "name_companies")
     private String nameComp;
 
     @ManyToMany
     @JoinTable(name = "COMPANI_PROJECT",
-            joinColumns = { @JoinColumn(name = "id_companie") },
+            joinColumns = { @JoinColumn(name = "id_compani") },
             inverseJoinColumns = { @JoinColumn(name = "ID_PROJECT") }
     )
     private List<Project> projects;
 
     public Companie() {
+    }
+
+    public Companie(String nameComp) {
+        this.nameComp = nameComp;
     }
 
     public Companie(Long idComp, String nameComp) {
@@ -51,6 +55,10 @@ public class Companie {
 
     public void setNameComp(String nameComp) {
         this.nameComp = nameComp;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
     }
 
     @Override

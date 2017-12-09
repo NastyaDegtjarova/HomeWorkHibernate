@@ -65,7 +65,7 @@ public class DeveloperController extends AbstractController {
                         showDevById();
                         break;
                     case PREVIOUS_MENU:
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -78,8 +78,6 @@ public class DeveloperController extends AbstractController {
         long devId = getScan().nextLong();
         try {
             Developer developer = developerDAO.getById(devId);
-            Hibernate.initialize(developer.getProjects());
-            Hibernate.initialize(developer.getSkills());
             System.out.println(developer);
         } catch (SQLException e) {
             e.printStackTrace();
@@ -129,8 +127,6 @@ public class DeveloperController extends AbstractController {
     }
 
     private void createNewDeveloper() {
-        System.out.println("Input DEVELOPER id");
-        long devId = getScan().nextLong();
         System.out.println("Input DEVELOPER FIRST_NAME");
         getScan().nextLine();
         String devFirstName = getScan().nextLine();
@@ -139,7 +135,7 @@ public class DeveloperController extends AbstractController {
         System.out.println("Input DEVELOPER SALARY");
         long devSalary = getScan().nextLong();
         try {
-            developerDAO.save(new Developer(devId, devFirstName, devLastName, new BigDecimal(devSalary)));
+            developerDAO.save(new Developer(devFirstName, devLastName, new BigDecimal(devSalary)));
         } catch (SQLException e) {
             e.printStackTrace();
         }

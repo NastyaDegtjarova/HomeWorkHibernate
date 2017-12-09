@@ -68,7 +68,7 @@ public class ProjectController extends AbstractController{
                         showProjById();
                         break;
                     case PREVIOUS_MENU:
-                        break;
+                        return;
                     default:
                         break;
                 }
@@ -129,15 +129,12 @@ public class ProjectController extends AbstractController{
     }
 
     private void createNewProject() {
-        System.out.println("Input PROJECT id");
-        long projectId = scan.nextLong();
         System.out.println("Input PROJECT name");
-        scan.nextLine();
         String projectName = scan.nextLine();
         System.out.println("Input PROJECT COST");
         int projCost = scan.nextInt();
         try {
-            projectDAO.save(new Project(projectId, projectName, projCost));
+            projectDAO.save(new Project(projectName, projCost));
         } catch (SQLException e) {
             e.printStackTrace();
         }

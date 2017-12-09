@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 @Table(name = "CUSTOMER")
 public class Customer {
     @Id
-    @Column(name = "ID_CUSTOMER")
+    @Column(name = "ID_CUSTOMERS")
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idCustomer;
 
@@ -29,6 +29,11 @@ public class Customer {
     private List<Project> projects;
 
     public Customer() {
+    }
+
+    public Customer(String firstNameCust, String lastNameCust) {
+        this.firstNameCust = firstNameCust;
+        this.lastNameCust = lastNameCust;
     }
 
     public Customer(Long idCustomer, String firstNameCust, String lastNameCust) {
@@ -64,6 +69,10 @@ public class Customer {
 
     public void setLastNameCust(String lastNameCust) {
         this.lastNameCust = lastNameCust;
+    }
+
+    public List<Project> getProjects() {
+        return projects;
     }
 
     @Override
