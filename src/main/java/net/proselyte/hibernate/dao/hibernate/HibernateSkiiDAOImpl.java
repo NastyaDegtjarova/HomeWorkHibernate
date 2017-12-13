@@ -2,10 +2,7 @@ package net.proselyte.hibernate.dao.hibernate;
 
 import net.proselyte.hibernate.dao.SkillDAO;
 import net.proselyte.hibernate.model.Skill;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -27,49 +24,64 @@ public class HibernateSkiiDAOImpl implements SkillDAO {
     }
 
     public void save(Skill skill) {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
 
         session.save(skill);
 
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public void update(Skill skill) throws SQLException {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
 
         session.update(skill);
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public Skill getById(Long id) {
-        Session session = this.sessionFactory.openSession();
+        try (Session session = this.sessionFactory.openSession()){
         Skill skill = session.get(Skill.class, id);
         Hibernate.initialize(skill.getDevelopers());
-        session.close();
         return skill;
+         }
     }
 
     public void delete(Skill skill) {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
 
         session.delete(skill);
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public List<Skill> getAll() {
-        Session session = this.sessionFactory.openSession();
-        Query query = session.createQuery("FROM Skill s");
-        List<Skill> result = query.list();
-        for (Skill skill : result) {
-            Hibernate.initialize(skill.getDevelopers());
+        try(Session session = this.sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM Skill s");
+            List<Skill> result = query.list();
+            for (Skill skill : result) {
+                Hibernate.initialize(skill.getDevelopers());
+            }
+            return result;
         }
-        session.close();
-        return result;
     }
 }

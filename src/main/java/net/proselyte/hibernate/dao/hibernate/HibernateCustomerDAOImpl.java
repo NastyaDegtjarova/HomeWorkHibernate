@@ -2,10 +2,7 @@ package net.proselyte.hibernate.dao.hibernate;
 
 import net.proselyte.hibernate.dao.CustomerDAO;
 import net.proselyte.hibernate.model.Customer;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
+import org.hibernate.*;
 import org.hibernate.cfg.Configuration;
 import org.hibernate.query.Query;
 
@@ -27,51 +24,64 @@ public class HibernateCustomerDAOImpl implements CustomerDAO {
     }
 
     public void save(Customer customer) {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
-
+        Transaction transaction = null;
+       try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
         session.save(customer);
-
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public void update(Customer customer) throws SQLException {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
 
         session.update(customer);
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public Customer getById(Long id) {
-        Session session = this.sessionFactory.openSession();
-        Customer customer = session.get(Customer.class, id);
-        if (customer != null) {
-            Hibernate.initialize(customer.getProjects());
+        try(Session session = this.sessionFactory.openSession()) {
+            Customer customer = session.get(Customer.class, id);
+            if (customer != null) {
+                Hibernate.initialize(customer.getProjects());
+            }
+            return customer;
         }
-        session.close();
-        return customer;
     }
 
     public void delete(Customer customer) {
-        Session session = this.sessionFactory.openSession();
-        Transaction transaction = session.beginTransaction();
+        Transaction transaction = null;
+        try(Session session = this.sessionFactory.openSession()){
+        transaction = session.beginTransaction();
 
         session.delete(customer);
         transaction.commit();
-        session.close();
+        } catch (HibernateException e) {
+            if (transaction != null) {
+                transaction.rollback();
+            }
+        }
     }
 
     public List<Customer> getAll() {
-        Session session = this.sessionFactory.openSession();
-        Query query = session.createQuery("FROM Customer c");
-        List<Customer> result = query.list();
-        for (Customer customer : result) {
-            Hibernate.initialize(customer.getProjects());
+        try(Session session = this.sessionFactory.openSession()) {
+            Query query = session.createQuery("FROM Customer c");
+            List<Customer> result = query.list();
+            for (Customer customer : result) {
+                Hibernate.initialize(customer.getProjects());
+            }
+            return result;
         }
-        session.close();
-        return result;
-}
+    }
 }
